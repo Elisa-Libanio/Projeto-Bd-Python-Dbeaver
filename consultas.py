@@ -16,10 +16,25 @@ for livros in dados:
     print(livros)
 
 # Localizar os livros escritos por um autor específico
+cursor.execute('SELECT * FROM Livros WHERE autor= "nome do autor"')
 
 # Verificar o número de cópias disponíveis de um determinado livro
+cursor.execute('SELECT Exemplares_disponiveis FROM Livros WHERE titulo="nome do livro"')
 
 #Mostrar os empréstimos em atraso.
+cursor.execute('SELECT livros.título, usuários.nome,empréstimos.data_de_empréstimo, empréstimos.data_de_devolução,\
+                FROM emprestimos\
+                INNER JOIN empréstimos ON livros.id_do_livro = empréstimos.id_do_livro')
+#delete remover um autor
+cursor.execute('DELETE  FROM Livros WHERE autor ="Paulo Coelho"')
+#remover um livro
+
+cursor.execute('DELETE FROM Livros WHERE titulo="SENHOR DOS ANEIS"')
+#marcar um livro como devolvido
+
+cursor.execute('UPDATE Livros SET Estado_do_Exemplar = "devolvido" WHERE titulo="SENHOR DOS ANEIS"')
+
+cursor.execute('UPDATE Livros SET Exemplares_disponiveis = Exemplares_disponiveis - 1 WHERE titulo="SENHOR DOS ANEIS"')
 
 conexao.commit()
 conexao.close()
